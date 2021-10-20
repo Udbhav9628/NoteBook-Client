@@ -1,12 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Link, useLocation } from "react-router-dom";
+
 
 export default function Navbar() {
+  let location = useLocation();
+  useEffect(() => {
+  
+  }, [location]);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Your NootBook
+          NootBook
         </Link>
         <button
           className="navbar-toggler"
@@ -22,12 +27,12 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/">
+              <Link className={`nav-link ${location.pathname==="/"?"active":""}`} aria-current="page" to="/">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
+              <Link className={`nav-link ${location.pathname==="/about"?"active":""}`} to="/about">
                 About Us
               </Link>
             </li>
