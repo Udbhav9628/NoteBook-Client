@@ -2,120 +2,82 @@ import Notecontext from "./Notecontext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  const notes = [
-    {
-      _id: "616c58b49c83050bee5e369a",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 2",
-      Description: "Abraham Description 2",
-      Tag: "General",
-      Date: "2021-10-17T17:09:08.540Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-    {
-      _id: "616c58bb9c83050bee5e369c",
-      User: "616c4a92c2eb5e37a7714b8c",
-      Title: "Abraham Note 3",
-      Description: "Abraham Description 3",
-      Tag: "General",
-      Date: "2021-10-17T17:09:15.203Z",
-      __v: 0,
-    },
-  ];
-  const [Notestate, setNotestate] = useState(notes)
+  const [Notestate, setNotestate] = useState([]);
+  const [Note, setNote] = useState([]); //For Updating the note
+
+  //CRUD OF NOTES FUNCTIONS
+
+  //CRUD - Create
+  async function CreateNote(Notes) {
+    const response = await fetch(`http://localhost:8000/CreateNotes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
+        authToken:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+      },
+      body: JSON.stringify(Notes), // converting Notes object into Json String format that's why Content type is  "application/json"
+    });
+    if (response.ok) {
+      const note = await response.json(); // parses JSON response into native JavaScript objects
+      //Displaying in Frontend
+      setNotestate(Notestate.concat(note));
+    }
+  }
+
+  //CRUD - Read/Fetch
+  async function FetchNote() {
+    const response = await fetch(`http://localhost:8000/FetchAllNotes`, {
+      method: "GET",
+      headers: {
+        authToken:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+      },
+    });
+    const note = await response.json(); // parses JSON response into native JavaScript objects
+    setNotestate(note.notes);
+  }
+  //CRUD - Read/Fetch Specific id note
+  async function FetchSpecificNote(id) {
+    const response = await fetch(`http://localhost:8000/UpdateNotes/${id}`, {
+      method: "GET",
+      headers: {
+        authToken:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+      },
+    });
+    const note = await response.json(); // parses JSON response into native JavaScript objects
+    setNote(note);
+    // console.log(Note); //loging just last wala note because it is async function and log runs before the note update every time
+  }
+
+  //CRUD - Update
+  const UpdateNote = async (id) => {};
+
+  //CRUD - Delete
+  const DeleteNote = async (id) => {
+    const response = await fetch(`http://localhost:8000/DeleteNotes/${id}`, {
+      method: "DELETE",
+      headers: {
+        authToken:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+      },
+    });
+    if (response.ok) {
+      setNotestate(
+        Notestate.filter((Element) => {
+          return Element._id !== id;
+        })
+      );
+    }
+  };
 
   return (
-    <Notecontext.Provider value={{Notestate, setNotestate}}>{props.children}</Notecontext.Provider>
+    <Notecontext.Provider
+      value={{ Notestate, CreateNote, FetchNote, FetchSpecificNote, UpdateNote, DeleteNote, Note, setNote }}
+    >
+      {props.children}
+    </Notecontext.Provider>
   );
 };
 

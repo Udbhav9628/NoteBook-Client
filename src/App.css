@@ -1,3 +1,12 @@
-card{
-    width: 18rem;
+.btnEdit{
+    width: 25%;
+    margin: 1%;
+    display:inline;
+}
+
+.button{
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
