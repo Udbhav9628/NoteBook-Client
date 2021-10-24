@@ -22,6 +22,15 @@ export default function AddNote() {
   const handle_add_note = (e) => {
     e.preventDefault(); //Preventing the page to load if load, the same note will appear because notes are hardcoded in variable there is no database that node would update
     CreateNote(Notes);
+    setNotes({
+      User:"",
+      Title:"",
+      Description:"",
+      Tag:"",
+      _id:"",
+      Date:"",
+      __v: ""
+    })
   };
 
   return (
@@ -34,6 +43,7 @@ export default function AddNote() {
           id="Title"
           name="Title"
           placeholder="Enter Notes"
+          value={Notes.Title}
           onChange={onchange}
         />
       </div>
@@ -44,6 +54,7 @@ export default function AddNote() {
           id="Description"
           name="Description"
           rows="3"
+          value={Notes.Description}
           onChange={onchange}
         ></textarea>
       </div>
@@ -55,6 +66,7 @@ export default function AddNote() {
           id="Tag"
           name="Tag"
           placeholder="Tag"
+          value={Notes.Tag}
           onChange={onchange}
         />
       </div>

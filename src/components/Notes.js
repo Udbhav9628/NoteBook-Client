@@ -22,7 +22,7 @@ export default function Notes() {
               Description={elements.Description}
               Date={elements.Date}
               Tag={elements.Tag}
-              User={elements.User}
+              // User={elements.User}
             />
           </div>
         );

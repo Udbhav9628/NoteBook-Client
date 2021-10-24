@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef } from "react";
 import Notecontext from "../context/notes/Notecontext";
 
 export default function NotesItem(props) {
   const context = useContext(Notecontext);
-  const { DeleteNote, FetchSpecificNote, Note, setNote } = context;
+  const { DeleteNote, UpdateNote, FetchSpecificNote, Note, setNote } = context;
 
   const onchange = (Event) => {
     setNote({ ...Note, [Event.target.name]: Event.target.value }); //Three Dot Operator/Spread Operator
   };
+
+  const refclose = useRef(null)
 
   return (
     <div className="card text-dark bg-info mb-3">
@@ -94,24 +96,21 @@ export default function NotesItem(props) {
                     onChange={onchange}
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary my-3"
-                  // onClick={handle_add_note}
-                >
-                  Add Note
-                </button>
               </form>
             </div>
             <div className="modal-footer">
               <button
+              ref={refclose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={()=>{
+                UpdateNote(Note._id,Note.Title,Note.Description,Note.Tag)
+                refclose.current.click();
+              }}>
                 Save changes
               </button>
             </div>
