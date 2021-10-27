@@ -6,11 +6,8 @@ export default function Home() {
   return (
     <div className="container">
       <h3>Add Notes</h3>
-      <AddNote/>
-      <div className="container">
-        <h3>Your Notes</h3>
-        <Notes />
-      </div>
+      <AddNote />
+      <Notes />
     </div>
   );
 }

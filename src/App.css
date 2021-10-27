@@ -10,3 +10,15 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+
+.alertedit{
+    height: 45px;
+    position: sticky;
+}
+.flexbox{
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

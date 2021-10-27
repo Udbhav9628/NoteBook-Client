@@ -4,7 +4,9 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/NoteState";
-// import Alert from "./components/Alert";
+import LoginComponent from "./components/LoginComponent";
+import Signup from "./components/Signup";
+import Alert from "./components/Alert";
 
 function App() {
   return (
@@ -12,10 +14,18 @@ function App() {
       <Router>
         <div>
           <Navbar />
-          {/* <Alert msg={"This is alert"} /> */}
+          <div className=" alertedit">
+          <Alert/>
+          </div>
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/Login">
+              <LoginComponent/>
+            </Route>
+            <Route exact path="/SignUp">
+              <Signup/>
             </Route>
             <Route exact path="/about">
               <About />

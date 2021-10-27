@@ -9,7 +9,7 @@ export default function NotesItem(props) {
     setNote({ ...Note, [Event.target.name]: Event.target.value }); //Three Dot Operator/Spread Operator
   };
 
-  const refclose = useRef(null)
+  const ref = useRef(null);
 
   return (
     <div className="card text-dark bg-info mb-3">
@@ -29,15 +29,14 @@ export default function NotesItem(props) {
           }}
         ></button>
         <button
-        type="button"
-        className="btn btnEdit btn-primary fas fa-edit"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        onClick={() => {
-          FetchSpecificNote(props.Id);
-        }}
-      >
-      </button>
+          type="button"
+          className="btn btnEdit btn-primary fas fa-edit"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          onClick={() => {
+            FetchSpecificNote(props.Id);
+          }}
+        ></button>
       </div>
       <div
         className="modal fade"
@@ -71,6 +70,8 @@ export default function NotesItem(props) {
                     placeholder="Enter Notes"
                     value={Note.Title}
                     onChange={onchange}
+                    minLength={3}
+                    required={true}
                   />
                 </div>
                 <div className="form-group">
@@ -82,6 +83,8 @@ export default function NotesItem(props) {
                     rows="3"
                     value={Note.Description}
                     onChange={onchange}
+                    minLength={5}
+                    required={true}
                   ></textarea>
                 </div>
                 <div className="form-group">
@@ -94,23 +97,29 @@ export default function NotesItem(props) {
                     placeholder="Tag"
                     value={Note.Tag}
                     onChange={onchange}
+                    minLength={3}
+                    required={true}
                   />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
               <button
-              ref={refclose}
+                ref={ref}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={()=>{
-                UpdateNote(Note._id,Note.Title,Note.Description,Note.Tag)
-                refclose.current.click();
-              }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  UpdateNote(Note._id, Note.Title, Note.Description, Note.Tag);
+                  ref.current.click();
+                }}
+              >
                 Save changes
               </button>
             </div>

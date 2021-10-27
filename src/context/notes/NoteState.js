@@ -3,6 +3,16 @@ import { useState } from "react";
 
 const NoteState = (props) => {
   const [Notestate, setNotestate] = useState([]);
+  const [Alert, setAlert] = useState(null);
+  const ShowAlert = (Message,type)=>{
+    setAlert({
+      Msg:Message,
+      type:type
+    })
+    setTimeout(() => {
+      setAlert(null)
+    }, 3000);
+  }
   const [Note, setNote] = useState({
     Date: "",
     Description: "",
@@ -22,11 +32,12 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
         authToken:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+         localStorage.getItem("Token") ,
       },
       body: JSON.stringify(Notes), // converting Notes object into Json String format that's why Content type is  "application/json"
     });
     if (response.ok) {
+      ShowAlert("Added Sucessfully","primary")
       const note = await response.json(); // parses JSON response into native JavaScript objects
       //Displaying in Frontend
       setNotestate(Notestate.concat(note));
@@ -35,13 +46,15 @@ const NoteState = (props) => {
 
   //CRUD - Read/Fetch
   async function FetchNote() {
+    ShowAlert("Loading...","primary")
     const response = await fetch(`http://localhost:8000/FetchAllNotes`, {
       method: "GET",
       headers: {
         authToken:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+         localStorage.getItem("Token") ,
       },
     });
+    setAlert(null)
     const note = await response.json(); // parses JSON response into native JavaScript objects
     setNotestate(note.notes);
   }
@@ -60,7 +73,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
         authToken:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+         localStorage.getItem("Token") ,
       },
       body: JSON.stringify({ Title, Description, Tag }), // converting Notes object into Json String (only format to transfer data over http) format that's why Content type is  "application/json and setting it to body so backend can access it by req.body"
     });
@@ -73,10 +86,11 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         authToken:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNmM0YTkyYzJlYjVlMzdhNzcxNGI4YyIsImlhdCI6MTYzNDQ4Njk1M30.-mhUnSpexUYChBSE_7L7joYd6LJl49mGj7bh_0PFA28",
+         localStorage.getItem("Token") ,
       },
     });
     if (response.ok) {
+      ShowAlert("Deleted Sucessfully","primary")
       setNotestate(
         Notestate.filter((Element) => {
           return Element._id !== id;
@@ -89,6 +103,7 @@ const NoteState = (props) => {
     <Notecontext.Provider
       value={{
         Notestate,
+        setNotestate,
         CreateNote,
         FetchNote,
         FetchSpecificNote,
@@ -96,6 +111,9 @@ const NoteState = (props) => {
         DeleteNote,
         Note,
         setNote,
+        Alert,
+        ShowAlert,
+        setAlert
       }}
     >
       {props.children}
