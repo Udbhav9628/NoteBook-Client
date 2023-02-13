@@ -1,3 +1,31 @@
+![Logo](https://www.pngitem.com/pimgs/m/279-2799340_blog-red-icon-note-taking-icon-hd-png.png)
+
+# NoteBook
+
+NoteBook is React application for managing Personal Notes on the Cloud.
+It's server Hosted on AWS Lambda. Password is Encrypted using bcryptjs.
+
+## Tech Stack
+
+**Client:** React Js, Bootstrap
+
+**Backend:** Node.js
+
+**Database:** MongoDB Atlas
+
+**Server Hosted On:** AWS Lambda
+
+**Frontend Hosted On:** GitHub
+
+## Features
+
+- Create
+- Read
+- Update
+- Delete
+- SignUp / SignIn
+- Password Encryption With Salt Using Bcrypt JS
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

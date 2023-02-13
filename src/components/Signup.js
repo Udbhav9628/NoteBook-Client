@@ -4,7 +4,7 @@ import Notecontext from "../context/notes/Notecontext";
 
 export default function Signup() {
   const context = useContext(Notecontext);
-  const { ShowAlert,setAlert } = context;
+  const { ShowAlert, setAlert } = context;
   const [signup, setsignup] = useState({
     Name: "",
     Email: "",
@@ -14,7 +14,8 @@ export default function Signup() {
   let History = useHistory();
 
   const Handle_Signup = async (Event) => {
-    ShowAlert("Loading...","primary")
+    console.log(signup);
+    ShowAlert("Loading...", "primary");
     Event.preventDefault();
     const response = await fetch(`http://localhost:8000/createuser`, {
       method: "POST",
@@ -23,16 +24,16 @@ export default function Signup() {
       },
       body: JSON.stringify(signup),
     });
-    setAlert(null)
+    setAlert(null);
     const Data = await response.json();
     if (Data.sucess) {
       //Save the authToken And redirect to '/' route
       // localStorage.setItem("Token", Data.Auth_Token);
       //Using History Hook
       History.push("/Login");
-      ShowAlert("Account Created Sucessfully, You Can Login Now..","success ")
+      ShowAlert("Account Created Sucessfully, You Can Login Now..", "success ");
     } else {
-      ShowAlert(Data.Message,"danger")
+      ShowAlert(Data.Message, "danger");
     }
   };
 
@@ -42,7 +43,7 @@ export default function Signup() {
 
   return (
     <form className="container" onSubmit={Handle_Signup}>
-       <h3>Create Your Account Here To Continue To NoteBook </h3>
+      <h3>Create Your Account Here To Continue To NoteBook </h3>
       <div className="mb-3">
         <label htmlFor="sName" className="form-label">
           Name
