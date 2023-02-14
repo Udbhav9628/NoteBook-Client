@@ -4,7 +4,7 @@ import Notecontext from "../context/notes/Notecontext";
 
 export default function LoginComponent() {
   const context = useContext(Notecontext);
-  const { setNotestate,ShowAlert } = context;
+  const { setNotestate, ShowAlert } = context;
   const [Login, setLogin] = useState({
     Email: "",
     Password: "",
@@ -19,7 +19,7 @@ export default function LoginComponent() {
   const Handle_Login = async (Event) => {
     ShowAlert("Loading...", "primary");
     Event.preventDefault();
-    const response = await fetch(`http://localhost:8000/Loginuser`, {
+    const response = await fetch(`${process.env.REACT_APP_ADDRESS}/Loginuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export default function LoginComponent() {
     // setAlert(null)
     const Data = await response.json();
     if (Data.sucess) {
-      setNotestate([])
+      setNotestate([]);
       //Save the authToken And redirect to '/' route
       localStorage.setItem("Token", Data.Auth_Token);
       //Using History Hook
@@ -77,10 +77,10 @@ export default function LoginComponent() {
       </form>
       <div className="container">
         <div className="flexbox">
-        <h5>Did Not Have Account</h5>
-        <Link className="btn btn-info mx-2" to="/SignUp">
-          SignUp
-        </Link>
+          <h5>Did Not Have Account</h5>
+          <Link className="btn btn-info mx-2" to="/SignUp">
+            SignUp
+          </Link>
         </div>
       </div>
     </div>

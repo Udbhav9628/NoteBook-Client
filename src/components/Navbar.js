@@ -7,7 +7,7 @@ export default function Navbar() {
   const { ShowAlert } = context;
   let History = useHistory();
   let location = useLocation();
- 
+
   const Handle_Logout = () => {
     localStorage.removeItem("Token");
     ShowAlert("Login Please..", "success ");
@@ -16,9 +16,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <div className="navbar-brand">
-          NootBook
-        </div>
+        <div className="navbar-brand">NootBook</div>
         <button
           className="navbar-toggler"
           type="button"
@@ -33,25 +31,29 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              {localStorage.getItem("Token") && <Link
-                className={`nav-link ${
-                  location.pathname === "/" ? "active" : ""
-                }`}
-                aria-current="page"
-                to="/"
-              >
-                Home
-              </Link>}
+              {localStorage.getItem("Token") && (
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/" ? "active" : ""
+                  }`}
+                  aria-current="page"
+                  to="/"
+                >
+                  Home
+                </Link>
+              )}
             </li>
             <li className="nav-item">
-              {localStorage.getItem("Token") && <Link
-                className={`nav-link ${
-                  location.pathname === "/about" ? "active" : ""
-                }`}
-                to="/about"
-              >
-                About Us
-              </Link>}
+              {localStorage.getItem("Token") && (
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/about" ? "active" : ""
+                  }`}
+                  to="/about"
+                >
+                  About Us
+                </Link>
+              )}
             </li>
           </ul>
         </div>
@@ -62,14 +64,16 @@ export default function Navbar() {
           className="btn btn-info mx-2"
           onClick={Handle_Logout}
         >
-          LogOut
+          Logout
         </button>
+      ) : location.pathname === "/Login" ? (
+        ""
       ) : (
-        (location.pathname==="/Login" ? "" :<div className = "d-flex">
-        <Link className="btn btn-info mx-2" to="/Login">
-          Login
-        </Link>
-      </div>)
+        <div className="d-flex">
+          <Link className="btn btn-info mx-2" to="/Login">
+            Login
+          </Link>
+        </div>
       )}
     </nav>
   );

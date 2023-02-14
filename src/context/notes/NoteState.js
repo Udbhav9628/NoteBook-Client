@@ -4,15 +4,15 @@ import { useState } from "react";
 const NoteState = (props) => {
   const [Notestate, setNotestate] = useState([]);
   const [Alert, setAlert] = useState(null);
-  const ShowAlert = (Message,type)=>{
+  const ShowAlert = (Message, type) => {
     setAlert({
-      Msg:Message,
-      type:type
-    })
+      Msg: Message,
+      type: type,
+    });
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 3000);
-  }
+  };
   const [Note, setNote] = useState({
     Date: "",
     Description: "",
@@ -27,17 +27,19 @@ const NoteState = (props) => {
 
   //CRUD - Create
   async function CreateNote(Notes) {
-    const response = await fetch(`http://localhost:8000/CreateNotes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
-        authToken:
-         localStorage.getItem("Token") ,
-      },
-      body: JSON.stringify(Notes), // converting Notes object into Json String format that's why Content type is  "application/json"
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_ADDRESS}/CreateNotes`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
+          authToken: localStorage.getItem("Token"),
+        },
+        body: JSON.stringify(Notes), // converting Notes object into Json String format that's why Content type is  "application/json"
+      }
+    );
     if (response.ok) {
-      ShowAlert("Added Sucessfully","primary")
+      ShowAlert("Added Sucessfully", "primary");
       const note = await response.json(); // parses JSON response into native JavaScript objects
       //Displaying in Frontend
       setNotestate(Notestate.concat(note));
@@ -46,15 +48,17 @@ const NoteState = (props) => {
 
   //CRUD - Read/Fetch
   async function FetchNote() {
-    ShowAlert("Loading...","primary")
-    const response = await fetch(`http://localhost:8000/FetchAllNotes`, {
-      method: "GET",
-      headers: {
-        authToken:
-         localStorage.getItem("Token") ,
-      },
-    });
-    setAlert(null)
+    ShowAlert("Loading...", "primary");
+    const response = await fetch(
+      `${process.env.REACT_APP_ADDRESS}/FetchAllNotes`,
+      {
+        method: "GET",
+        headers: {
+          authToken: localStorage.getItem("Token"),
+        },
+      }
+    );
+    setAlert(null);
     const note = await response.json(); // parses JSON response into native JavaScript objects
     setNotestate(note.notes);
   }
@@ -68,12 +72,11 @@ const NoteState = (props) => {
 
   //CRUD - Update
   const UpdateNote = async (id, Title, Description, Tag) => {
-    await fetch(`http://localhost:8000/UpdateNotes/${id}`, {
+    await fetch(`${process.env.REACT_APP_ADDRESS}/UpdateNotes/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json", //means You must give object to body like here we are giving Notes object
-        authToken:
-         localStorage.getItem("Token") ,
+        authToken: localStorage.getItem("Token"),
       },
       body: JSON.stringify({ Title, Description, Tag }), // converting Notes object into Json String (only format to transfer data over http) format that's why Content type is  "application/json and setting it to body so backend can access it by req.body"
     });
@@ -82,15 +85,17 @@ const NoteState = (props) => {
 
   //CRUD - Delete
   const DeleteNote = async (id) => {
-    const response = await fetch(`http://localhost:8000/DeleteNotes/${id}`, {
-      method: "DELETE",
-      headers: {
-        authToken:
-         localStorage.getItem("Token") ,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_ADDRESS}/DeleteNotes/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authToken: localStorage.getItem("Token"),
+        },
+      }
+    );
     if (response.ok) {
-      ShowAlert("Deleted Sucessfully","primary")
+      ShowAlert("Deleted Sucessfully", "primary");
       setNotestate(
         Notestate.filter((Element) => {
           return Element._id !== id;
@@ -113,7 +118,7 @@ const NoteState = (props) => {
         setNote,
         Alert,
         ShowAlert,
-        setAlert
+        setAlert,
       }}
     >
       {props.children}

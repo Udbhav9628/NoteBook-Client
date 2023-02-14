@@ -14,16 +14,18 @@ export default function Signup() {
   let History = useHistory();
 
   const Handle_Signup = async (Event) => {
-    console.log(signup);
     ShowAlert("Loading...", "primary");
     Event.preventDefault();
-    const response = await fetch(`http://localhost:8000/createuser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(signup),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_ADDRESS}/createuser`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signup),
+      }
+    );
     setAlert(null);
     const Data = await response.json();
     if (Data.sucess) {

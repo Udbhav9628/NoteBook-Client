@@ -9,7 +9,7 @@ export default function About() {
       </h4>
       <hr></hr>
       <h4>Features :-</h4>
-      <h5>Create, Read, Update, Delete, Signup, Signin, Logout etc.</h5>
+      <h5>Create, Read, Update, Delete, Signup, Signin etc.</h5>
 
       <hr></hr>
       <h4>Tech Stack :-</h4>
