@@ -15,7 +15,7 @@ It's server Hosted on AWS Lambda. Password is Encrypted using bcryptjs.
 
 **Server Hosted On:** AWS Lambda
 
-**Frontend Hosted On:** GitHub
+**Frontend Hosted On:** Netlify
 
 ## Features
 
